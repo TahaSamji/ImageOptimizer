@@ -36,8 +36,8 @@ function App() {
       const formData = new FormData();
       formData.append("UploadFile", file)
       const res = await axios({
-        // url: "https://image-optimization-backend.vercel.app/UploadImage",
-        url:"http://localhost:8000/UploadImage",
+        url: "https://image-optimization-backend.vercel.app/UploadImage",
+        // url:"http://localhost:8000/UploadImage",
         method: 'post',
         data: formData
       });
