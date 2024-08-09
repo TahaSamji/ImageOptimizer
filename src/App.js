@@ -36,21 +36,16 @@ function App() {
       const formData = new FormData();
       formData.append("UploadFile", file)
       const res = await axios({
-        url: "https://image-optimization-backend.vercel.app/UploadImage",
-        // url:"http://localhost:8000/UploadImage",
+        // url: "https://image-optimization-backend.vercel.app/UploadImage",
+        url:"http://localhost:8000/UploadImage",
         method: 'post',
         data: formData
       });
       if (res.data) {
         console.log(res.data)
-        const { image,newSize,prevSize,percent } = res.data;
+        const { image: base64Image,newSize,prevSize,percent } = res.data;
         setInfo({newSize,prevSize,percent})
-        const downloadResponse = await axios.get(image, {
-                responseType: 'arraybuffer', // Important for downloading files
-        });
-        console.log(downloadResponse.data)
-       
-        const blob = new Blob([downloadResponse.data], { type: 'image/png' });
+        const blob = new Blob([Uint8Array.from(atob(base64Image), c => c.charCodeAt(0))], { type: 'image/png' });
         const objectURL = URL.createObjectURL(blob);
         setisLoading(false);
         setImage(objectURL);
@@ -61,10 +56,6 @@ function App() {
   }
   return (
     <div className="App">
-       <meta 
-     http-equiv="Content-Security-Policy"   
-     content="upgrade-insecure-requests" 
-    />
       <h2>Image Optimizer</h2>
       <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
         <div style={{marginBottom:10}}>
