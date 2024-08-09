@@ -61,6 +61,10 @@ function App() {
   }
   return (
     <div className="App">
+       <meta 
+     http-equiv="Content-Security-Policy"   
+     content="upgrade-insecure-requests" 
+    />
       <h2>Image Optimizer</h2>
       <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
         <div style={{marginBottom:10}}>
