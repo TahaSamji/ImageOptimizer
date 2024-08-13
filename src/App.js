@@ -15,7 +15,9 @@ function App() {
   const [isloading, setisLoading] = useState(false);
   const handleChange = function (e) {
     console.log(e.target.files[0])
+    
     setfile(e.target.files[0]);
+     
   }
   function downloadImage() {
     if (!image) {
@@ -32,6 +34,16 @@ function App() {
 
   const OptImage = async () => {
     try {
+      console.log(file.type)
+      if (file.type !== "image/png" && file.type !== "image/jpeg") {
+        window.alert("File Format not supported (supported : PNG, JPG)");
+        return;
+      }
+     
+      if(file.size/1024 > 5000){
+        window.alert("File Size Should be below 5MB");
+        return;
+       }
       setisLoading(true);
       const formData = new FormData();
       formData.append("UploadFile", file)
